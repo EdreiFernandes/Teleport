@@ -11,7 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask groundMask;
 
     [SerializeField]
-    private float speed = 12f;
+    private float acceleration = 0.2f;
+    [SerializeField]
+    private float minSpeed = 12f;
+    [SerializeField]
+    private float maxSpeed = 20f;
     [SerializeField]
     private float gravity = -9.81f;
     [SerializeField]
@@ -19,12 +23,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float groundDistance = 0.4f;
 
+    private float speed;
     private Vector3 velocity;
     private bool isGrounded;
 
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        speed = minSpeed;
     }
 
     private void Update()
@@ -32,7 +38,10 @@ public class PlayerMovement : MonoBehaviour
         checkIfIsGrounded();
         applyGravity();
         walking();
+        running();
         jumping();
+
+        Debug.Log("°-°   " + speed);
     }
 
     private void checkIfIsGrounded()
@@ -58,6 +67,24 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
+    }
+
+    private void running()
+    {
+        if (Input.GetButton("Run") && isGrounded)
+        {
+            if(speed < maxSpeed)
+            {
+                speed += acceleration;
+            }
+        }
+        else
+        {
+            if (speed > minSpeed)
+            {
+                speed -= acceleration;
+            }
+        }
     }
 
     private void jumping()

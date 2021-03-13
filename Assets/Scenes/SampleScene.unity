@@ -5633,7 +5633,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  speed: 12
+  acceleration: 0.2
+  minSpeed: 12
+  maxSpeed: 20
   gravity: -9.81
   jumpHeight: 3
   groundDistance: 0.4
