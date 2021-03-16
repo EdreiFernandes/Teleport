@@ -40,8 +40,6 @@ public class PlayerMovement : MonoBehaviour
         walking();
         running();
         jumping();
-
-        Debug.Log("°-°   " + speed);
     }
 
     private void checkIfIsGrounded()
