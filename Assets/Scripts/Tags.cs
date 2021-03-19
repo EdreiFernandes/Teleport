@@ -1,0 +1,5 @@
+enum Tags
+{
+    Player,
+    Spear
+}
