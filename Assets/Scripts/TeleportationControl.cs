@@ -1,16 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TeleportationControl : MonoBehaviour
 {
     [SerializeField]
     private Transform spear;
+    private Vector3 spearPosition;
     private bool carryingASpear = true;
 
     void Update()
     {
-        SetSpear();
+        if (Input.GetButtonDown("Fire"))
+        {
+            if(carryingASpear)
+            {
+                SetSpear();
+            }
+            else
+            {
+                teleportToSpear();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,12 +29,14 @@ public class TeleportationControl : MonoBehaviour
 
     private void SetSpear()
     {
-        if (Input.GetButtonDown("Fire") && carryingASpear)
-        {
-            Vector3 spearPosition = transform.position + transform.forward * 2;
-            Instantiate(spear, spearPosition, transform.rotation);
-            carryingASpear = false;
-        }
+        spearPosition = transform.position + transform.forward * 2;
+        Instantiate(spear, spearPosition, transform.rotation);
+        carryingASpear = false;
+    }
+
+    private void teleportToSpear()
+    {
+        transform.position = spearPosition;
     }
 
     private void TakingTheSpearBack(Collider spearCollider)
